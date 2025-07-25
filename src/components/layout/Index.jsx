@@ -6,13 +6,13 @@ import Sitebar from '../sitebar/Index'
 const Adminlayout = () => {
   return (
     <>
-     <Header/>
-     <div className='flex gap-2 border'>
-     <main>
-        <Outlet/>
-     </main>
-     <Sitebar/>
-     </div>
+      <Header />
+      <Sitebar />
+      <div>
+        <main className='mt-[90px] ml-[320px]'>
+          <Outlet/>
+        </main>
+      </div>
     </>
   )
 }
