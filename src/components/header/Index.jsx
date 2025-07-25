@@ -29,7 +29,6 @@ const Header = () => {
                   <NavLink to={'/statictics'}>t</NavLink>
                   <NavLink to={'/statictics'}>t</NavLink>
                   <NavLink to={'/statictics'}>t</NavLink>
-                  <NavLink to={'/statictics'}>t</NavLink>
                   <span onClick={logOut} className='flex items-center gap-2 border py-3 px-4 rounded-md text-gray-700 bg-white font-[600] hover:opacity-90 cursor-pointer active:scale-95 duration-620'>
                     <MdExitToApp className='text-2xl'/>
                   </span>
