@@ -23,7 +23,7 @@ const LoginPage = () => {
         }
     }
   return (
-    <section className='min-h-screen flex justify-center items-center w-full bg-cover bg-center' style={{ backgroundImage: 'url("../../../public/miya_rasmi.jpg")' }}>
+    <section className='min-h-screen flex justify-center items-center w-full bg-cover bg-center' style={{ backgroundImage: 'url("/public/miya_rasmi.jpg")' }}>
         <div className='container mx-auto backdrop-blur flex flex-col items-center max-w-[400px] shadow-2xl border-white rounded-xl py-8 px-2 mr-40'>
            <div><FaUserCircle className='text-white text-[70px]'/></div>
            <h1 className='text-3xl text-white font-[700] py-4 pb-6'>Login</h1>
