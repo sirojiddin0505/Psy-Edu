@@ -16,7 +16,7 @@ const Header = () => {
         <div className='container mx-auto py-[22.5px] px-4 pl-[254px] max-w-[100%] '>
           <div className='flex justify-between items-center'>
             <span onClick={() => setOpenSitebar(!openSitebar)}><CgMenuLeft className='text-4xl text-white cursor-pointer'/></span>
-            <span> <FaSun className='text-white text-3xl'/> </span>
+            <span> <FaSun className='text-white text-3xl cursor-pointer'/> </span>
             {openSitebar && (
               <div className='fixed top-0 left-0 z-100'>
                 <main className='w-[75px] text-center min-h-screen bg-gray-800'>
