@@ -1,6 +1,6 @@
 import React from 'react'
 
-function EndTest() {
+function EndTestPage() {
   return (
     <div>
       EndTestPage
@@ -8,4 +8,4 @@ function EndTest() {
   )
 }
 
-export default EndTest
+export default EndTestPage
