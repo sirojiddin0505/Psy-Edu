@@ -3,7 +3,7 @@ import React from 'react'
 function StarterTest() {
   return (
     <div>
-       StarterTest
+       StarterTest1
     </div>
   )
 }
