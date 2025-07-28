@@ -2,8 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { MdClose, MdDelete } from 'react-icons/md';
 import { RiEdit2Fill } from 'react-icons/ri';
+// import { useNavigate } from 'react-router-dom';
 
 const RegionPage = () => {
+    // const navigate = useNavigate("")
     const [modal, setModal] = useState(false)
     const [regions, setRegions] = useState([])
     const fetchRegions = async() => {
@@ -15,8 +17,8 @@ const RegionPage = () => {
         }
     }
     useEffect(() => {
-        fetchRegions()
-    }, [])
+        fetchRegions();
+    },[])
     const editRegion = async (id) => {
         try{
             const res = await axios.patch(`https://testpsyedu.limsa.uz/region/${id}`)
@@ -70,7 +72,7 @@ const RegionPage = () => {
                                 <td className='border border-[#ffff] px-4 py-2 font-bold'>{index+1}</td>
                                 <td className='border border-[#ffff] px-4 py-2'>{item.name}</td>
                                 <td className='border flex justify-center gap-10 py-3 items-center'>
-                                    <span onClick={() => editRegion(name.id)}><RiEdit2Fill className='text-green-600 cursor-pointer'/></span>
+                                    <span onClick={() => editRegion(item.id)}><RiEdit2Fill className='text-green-600 cursor-pointer'/></span>
                                     <span onClick={()=> deleteRegion(item.id)}><MdDelete className='text-red-500 cursor-pointer'/></span>
                                 </td>
                             </tr>

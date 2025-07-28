@@ -17,7 +17,7 @@ const Header = () => {
   const [openSitebar, setOpenSitebar] = useState(false)
   const dispatch = useDispatch()
   const store = useSelector((state) => state.darkMode.dark)
-  // const [changeSun, setChangeSun] = useState(false) 
+
   return (
     <section className={`${store ? "bg-[#212130] border border-[#212130]" : "bg-[white] border border-gray-700"}`}>
         <div className='container mx-auto py-4 px-4 pl-[254px] max-w-[100%] '>
@@ -49,4 +49,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default Header 
