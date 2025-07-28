@@ -16,4 +16,3 @@ export const darkSlice = createSlice({
 export const {changeTheme} = darkSlice.actions
 
 export default darkSlice.reducer; 
-// 9860120104622564

@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash, FaUserCircle } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
-    const  [showPassword , setShowPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
     const {register, handleSubmit, formState:{errors}} = useForm()
     const navigate = useNavigate()
     const onSubmit = async (data) => {
