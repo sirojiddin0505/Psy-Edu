@@ -4,6 +4,10 @@ import Adminlayout from './components/layout/Index'
 import LoginPage from './pages/login/Index'
 import Statistics from './pages/statistics/Index'
 import RegionPage from './pages/region'
+import StarterTestPage from './pages/startest'
+import LessonTestPage from './pages/lessontest'
+import EndTestPage from './pages/endtest'
+import CategoryTestPage from './pages/categorytest'
 
 const App = () => {
   return (
@@ -12,6 +16,10 @@ const App = () => {
       <Route path='/login' element={<LoginPage />} />
       <Route path='/' element={<Adminlayout/>}>
         <Route path='/statictics' element={<Statistics/>} />
+        <Route path='/results/start' element={<StarterTestPage />} />
+        <Route path='/results/lesson' element={<LessonTestPage />} />
+        <Route path='/results/result-finish' element={<CategoryTestPage />} />
+        <Route path='/results/category' element={<EndTestPage />} />
         <Route path='/regions' element={<RegionPage />} />
       </Route>
      </Routes>
