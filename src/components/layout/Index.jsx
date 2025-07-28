@@ -9,7 +9,7 @@ const Adminlayout = () => {
       <Header />
       <Sitebar />
       <div>
-        <main className='mt-[90px] ml-[320px]'>
+        <main className='mt-[10px] ml-65 '>
           <Outlet/>
         </main>
       </div>
