@@ -8,6 +8,7 @@ import StarterTestPage from './pages/startest'
 import LessonTestPage from './pages/lessontest'
 import EndTestPage from './pages/endtest'
 import CategoryTestPage from './pages/categorytest'
+import Adpage from './pages/ad/Index'
 
 const App = () => {
   return (
@@ -20,11 +21,12 @@ const App = () => {
         <Route path='/results/lesson' element={<LessonTestPage />} />
         <Route path='/results/result-finish' element={<CategoryTestPage />} />
         <Route path='/results/category' element={<EndTestPage />} />
+        <Route path='/ads' element={<Adpage />} />
         <Route path='/regions' element={<RegionPage />} />
       </Route>
      </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default App
+export default App;

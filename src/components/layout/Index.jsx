@@ -1,20 +1,21 @@
-import React from 'react'
-import Header from '../header/Index'
-import { Outlet } from 'react-router-dom'
-import Sitebar from '../sitebar/Index'
+import { React } from "react";
+import Header from "../header/Index";
+import { Outlet } from "react-router-dom";
+import Sitebar from "../sitebar/Index";
 
 const Adminlayout = () => {
+
   return (
     <>
       <Header />
       <Sitebar />
       <div>
         <main className='mt-[10px] ml-65 '>
-          <Outlet/>
+          <Outlet />
         </main>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Adminlayout
+export default Adminlayout;
