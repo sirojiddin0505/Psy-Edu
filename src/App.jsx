@@ -29,11 +29,12 @@ const App = () => {
         <Route path='/results/lesson' element={<LessonTestPage />} />
         <Route path='/results/result-finish' element={<CategoryTestPage />} />
         <Route path='/results/category' element={<EndTestPage />} />
+        <Route path='/ads' element={<Adpage />} />
         <Route path='/regions' element={<RegionPage />} />
       </Route>
      </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default App
+export default App;
