@@ -11,6 +11,7 @@ import CategoryTestPage from './pages/categorytest'
 import AddLesson from './pages/darslar/addLesson'
 import AddModule from './pages/darslar/addModule'
 import AddTestForLesson from './pages/darslar/addTestForLesson'
+import Adpage from './pages/ad/Index';
  
 
 const App = () => {

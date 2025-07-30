@@ -10,8 +10,8 @@ export default function AddModule() {
 
   const getModules = async () => {
     try {
-      const res = await axios.get("https://testpsyedu.limsa.uz/lessons");
-      setModules(res?.data?.data?.data || []);
+      const res = await axios.get("https://testpsyedu.limsa.uz/course-module");
+      setModules(res?.data?.data || []);
     } catch (err) {
       console.log(err);
     }
@@ -24,7 +24,7 @@ export default function AddModule() {
     }
 
     try {
-      await axios.post("https://testpsyedu.limsa.uz/lessons", {
+      await axios.post("https://testpsyedu.limsa.uz/course-module", {
         title: title.trim(),
         order: Number(order),
       });
