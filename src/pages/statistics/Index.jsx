@@ -52,7 +52,7 @@ const Statistics = () => {
   return (
     <>
       <div className="bg-[#e0e0e08d]">
-        <div className="p-4 max-w-full overflow-x-auto">
+        <div className="p-4 mt-21 max-w-full overflow-x-auto">
           <table className="min-w-full border text-sm text-center border-gray-200 shadow rounded-md overflow-hidden">
             <thead className="bg-gray-100">
               <tr>
