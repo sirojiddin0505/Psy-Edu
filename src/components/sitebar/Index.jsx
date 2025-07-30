@@ -60,7 +60,7 @@ const Sitebar = () => {
             {activeMenu === 'darslar' && (
               <div className='flex flex-col text-[15px]'>
                 <NavLink to='/lessons/1' className={'hover:bg-white hover:text-gray-800 py-3 pl-10'}>- Modul qo'shish</NavLink>
-                <NavLink to='/lessons/1' className={'hover:bg-white hover:text-gray-800 py-3 pl-10'}>- Dars qo'shish</NavLink>
+                <NavLink to='/lessons/2' className={'hover:bg-white hover:text-gray-800 py-3 pl-10'}>- Dars qo'shish</NavLink>
                 <NavLink to='/lessons/3' className={'hover:bg-white hover:text-gray-800 py-3 pl-10'}>- Test qo'shish</NavLink>
               </div>
             )}
