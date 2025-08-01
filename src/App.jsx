@@ -12,6 +12,9 @@ import AddLesson from './pages/darslar/addLesson'
 import AddModule from './pages/darslar/addModule'
 import AddTestForLesson from './pages/darslar/addTestForLesson'
 import Adpage from './pages/ad/Index';
+import BoshlangichTestPage from './pages/testlar/boshlangich'
+import DoimiyTestPage from './pages/testlar/doimiy'
+import YakuniyTestPage from './pages/testlar/yakuniy'
  
 
 const App = () => {
