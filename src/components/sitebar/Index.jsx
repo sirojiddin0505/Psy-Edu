@@ -46,9 +46,9 @@ const Sitebar = () => {
             </div>
             {activeMenu === 'testlar' && (
               <div className='flex flex-col text-[15px]'>
-                <NavLink to='/tests/1' className={'hover:bg-white hover:text-gray-800 py-3 pl-8'}>- Boshlang'ich test</NavLink>
-                <NavLink to='/tests/1' className={'hover:bg-white hover:text-gray-800 py-3 pl-8'}>- Doimiy test</NavLink>
-                <NavLink to='/tests/1' className={'hover:bg-white hover:text-gray-800 py-3 pl-8'}>- Yakuniy test</NavLink>
+                <NavLink to='/tests/boshlangich' className={'hover:bg-white hover:text-gray-800 py-3 pl-8'}>- Boshlang'ich test</NavLink>
+                <NavLink to='/tests/doimiy' className={'hover:bg-white hover:text-gray-800 py-3 pl-8'}>- Doimiy test</NavLink>
+                <NavLink to='/tests/yakuniy' className={'hover:bg-white hover:text-gray-800 py-3 pl-8'}>- Yakuniy test</NavLink>
               </div>
             )}
           </div>
