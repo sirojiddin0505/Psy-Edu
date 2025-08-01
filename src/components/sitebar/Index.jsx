@@ -62,7 +62,7 @@ const Sitebar = () => {
             {activeMenu === 'darslar' && (
               <div className='flex flex-col text-[15px]'>
                 <NavLink to='/lessons/1' className={`hover:text-gray-800 py-3 pl-8 ${isDark ? 'hover:bg-white' : 'hover:bg-gray-500 hover:text-white' }`}>- Modul qo'shish</NavLink>
-                <NavLink to='/lessons/1' className={`hover:text-gray-800 py-3 pl-8 ${isDark ? 'hover:bg-white' : 'hover:bg-gray-500 hover:text-white' }`}>- Dars qo'shish</NavLink>
+                <NavLink to='/lessons/2' className={`hover:text-gray-800 py-3 pl-8 ${isDark ? 'hover:bg-white' : 'hover:bg-gray-500 hover:text-white' }`}>- Dars qo'shish</NavLink>
                 <NavLink to='/lessons/3' className={`hover:text-gray-800 py-3 pl-8 ${isDark ? 'hover:bg-white' : 'hover:bg-gray-500 hover:text-white' }`}>- Test qo'shish</NavLink>
               </div>
             )}
