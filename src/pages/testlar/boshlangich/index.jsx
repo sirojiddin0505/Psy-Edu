@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { AiTwotoneFileAdd } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 import { FaSquareCheck } from "react-icons/fa6";
 import { MdDeleteOutline } from "react-icons/md";
@@ -19,8 +20,10 @@ function BoshlangichTestPage() {
   const [testId, setTestId] = useState([]);
   const [edit, setEdit] = useState(null);
   const [isEdit, SetIsEdit] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const token = localStorage.getItem("token");
-
+  const [deleteId, setDeleteId] = useState(null);
+  const [search, setSearch] = useState("");
   const resetForm = () => {
     setQuiz("");
     setVariant1("");
@@ -133,13 +136,16 @@ function BoshlangichTestPage() {
       console.log(err);
     }
   };
-  const deleteTest = async (id) => {
+  const deleteTest = async (deleteId) => {
     try {
-      await axios.delete(`https://testpsyedu.limsa.uz/questions/remove/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `https://testpsyedu.limsa.uz/questions/remove/${deleteId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.success("Test muvaffaqiyatli o'chirildi.");
       setOpen(false);
       getTest();
@@ -152,6 +158,9 @@ function BoshlangichTestPage() {
     getTopics();
     getTestCategory();
   }, []);
+  const filteredTests = tests.filter((test) =>
+    test.text.toLowerCase().includes(search.toLowerCase())
+  );
   return (
     <div className=" ">
       <ToastContainer />
@@ -162,6 +171,8 @@ function BoshlangichTestPage() {
         <div className="px-[15px]  ">
           <form className="flex justify-between items-center rounded-[10px] bg-gray-800 py-[20px] px-[20px] ">
             <input
+              value={search}
+              onChange={(e) => setSearch(e?.target?.value)}
               className="w-[800px] px-[20px] h-[50px] border-2 border-gray-700 outline-none rounded-[10px] text-white "
               placeholder="Testlarni qidirish..."
               type="text"
@@ -179,96 +190,134 @@ function BoshlangichTestPage() {
           </form>
         </div>
         <div className="overflow-x-auto px-[15px] rounded-[10px] overflow-hidden py-[15px] ">
-          <table className="min-w-full border border-gray-300 text-sm text-left">
-            <thead className="bg-gray-600 text-gray-700">
-              <tr className="text-center">
-                <th className=" text-white border-2 border-gray-400 px-4 py-2">
-                  №
-                </th>
-                <th className=" text-white border-2 border-gray-400 px-4 py-2">
-                  Savol
-                </th>
-                <th className=" text-white border-2 border-gray-400 px-4 py-2">
-                  A javob
-                </th>
-                <th className=" text-white border-2 border-gray-400 px-4 py-2">
-                  B javob
-                </th>
-                <th className=" text-white border-2 border-gray-400 px-4 py-2">
-                  C javob
-                </th>
-                <th className=" text-white border-2 border-gray-400 px-4 py-2">
-                  D javob
-                </th>
-                <th className=" text-white border-2 border-gray-400 px-2 py-2">
-                  To'g'ri javob
-                </th>
-                <th className=" text-white border-2 border-gray-400 px-4 py-2">
-                  Mavzu
-                </th>
-                <th className=" text-white border-2 border-gray-400 px-4 py-2">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {tests.map((test, i) => (
-                <tr key={test.id} className="bg-gray-600  ">
-                  <td className="text-white border-2 text-center border-gray-400 px-4 py-2">
-                    {i + 1}
-                  </td>
-                  <td className="text-white border-2 border-gray-400 px-4 py-2">
-                    {test.text}
-                  </td>
-                  <td className="text-white border-2 text-center border-gray-400 px-4 py-2">
-                    {test.answers[0].text}
-                  </td>
-                  <td className="text-white border-2 text-center border-gray-400 px-4 py-2">
-                    {test.answers[1].text}
-                  </td>
-                  <td className="text-white border-2 text-center border-gray-400 px-4 py-2">
-                    {test.answers[2].text}
-                  </td>
-                  <td className="text-white border-2 text-center border-gray-400 px-4 py-2">
-                    {test.answers[3].text}
-                  </td>
-                  <td className="text-white border-2 border-gray-400 px-4 py-2 ">
-                    {(() => {
-                      const correctIndex = test.answers.findIndex(
-                        (a) => a.isCorrect
-                      );
-                      const options = ["A", "B", "C", "D"];
-                      return correctIndex !== -1 ? (
-                        <span className="flex items-center font-bold justify-center gap-1">
-                          <FaSquareCheck className="text-green-400 " />
-                          {options[correctIndex]}
-                        </span>
-                      ) : (
-                        "—"
-                      );
-                    })()}
-                  </td>
-                  <td className="text-white text-center border-2 border-gray-400 px-4 py-2">
-                    {test.subcategory.name}
-                  </td>
-                  <td className="text-white border-2 border-gray-400 px-4 py-2">
-                    <button
-                      onClick={() => editTest(test)}
-                      className="px-[5px] "
-                    >
-                      <CiEdit className="text-green-400 text-[20px] " />
-                    </button>
-                    <button
-                      onClick={() => deleteTest(test.id)}
-                      className="px-[5px]"
-                    >
-                      <MdDeleteOutline className="text-red-500 text-[20px]" />
-                    </button>
-                  </td>
+          {filteredTests.length === 0 ? (
+            <div className="py-[20px] ">
+                <div className="flex justify-center flex-col items-center ">
+                  <AiTwotoneFileAdd className="text-white text-[70px]  " />
+                  <span className="text-[20px] text-white font-bold ">
+                    Sizda hali bunday test mavjud emas 😥
+                  </span>
+                </div>
+            </div>
+          ) : (
+            <table className="min-w-full border border-gray-300 text-sm text-left">
+              <thead className="bg-gray-600 text-gray-700">
+                <tr className="text-center">
+                  <th className=" text-white border-2 border-gray-400 px-4 py-2">
+                    №
+                  </th>
+                  <th className=" text-white border-2 border-gray-400 px-4 py-2">
+                    Savol
+                  </th>
+                  <th className=" text-white border-2 border-gray-400 px-4 py-2">
+                    A javob
+                  </th>
+                  <th className=" text-white border-2 border-gray-400 px-4 py-2">
+                    B javob
+                  </th>
+                  <th className=" text-white border-2 border-gray-400 px-4 py-2">
+                    C javob
+                  </th>
+                  <th className=" text-white border-2 border-gray-400 px-4 py-2">
+                    D javob
+                  </th>
+                  <th className=" text-white border-2 border-gray-400 px-2 py-2">
+                    To'g'ri javob
+                  </th>
+                  <th className=" text-white border-2 border-gray-400 px-4 py-2">
+                    Mavzu
+                  </th>
+                  <th className=" text-white border-2 border-gray-400 px-4 py-2">
+                    Action
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredTests.map((test, i) => (
+                  <tr key={test.id} className="bg-gray-600  ">
+                    <td className="text-white border-2 font-bold text-center border-gray-400 px-4 py-2">
+                      {i + 1}
+                    </td>
+                    <td className="text-white font-[700] text-[14px] border-2 border-gray-400 w-[300px] px-4 py-2">
+                      {test.text}
+                    </td>
+                    <td
+                      className={`border-2 font-[600] text-[14px] text-center border-gray-400 px-4 py-2 ${
+                        test.answers[0].isCorrect
+                          ? "bg-green-400 text-white font-[700]"
+                          : "text-white"
+                      }`}
+                    >
+                      {test.answers[0].text}
+                    </td>
+                    <td
+                      className={`border-2 font-[600] text-[14px] text-center border-gray-400 px-4 py-2 ${
+                        test.answers[1].isCorrect
+                          ? "bg-green-400 text-white font-[700]"
+                          : "text-white"
+                      }`}
+                    >
+                      {test.answers[1].text}
+                    </td>
+                    <td
+                      className={`border-2 font-[600] text-[14px] text-center border-gray-400 px-4 py-2 ${
+                        test.answers[2].isCorrect
+                          ? "bg-green-400 text-white font-[700]"
+                          : "text-white"
+                      }`}
+                    >
+                      {test.answers[2].text}
+                    </td>
+                    <td
+                      className={`border-2 font-[600] text-[14px] text-center border-gray-400 px-4 py-2 ${
+                        test.answers[3].isCorrect
+                          ? "bg-green-400 text-white font-[700]"
+                          : "text-white"
+                      }`}
+                    >
+                      {test.answers[3].text}
+                    </td>
+                    <td className="text-white font-[600] text-[14px] border-2 border-gray-400 px-4 py-2 ">
+                      {(() => {
+                        const correctIndex = test.answers.findIndex(
+                          (a) => a.isCorrect
+                        );
+                        const options = ["A", "B", "C", "D"];
+                        return correctIndex !== -1 ? (
+                          <span className="flex items-center font-bold justify-center gap-1">
+                            <FaSquareCheck className="text-green-400 " />
+                            {options[correctIndex]}
+                          </span>
+                        ) : (
+                          "—"
+                        );
+                      })()}
+                    </td>
+                    <td className="text-white font-[600] text-[14px] text-center border-2 border-gray-400 px-4 py-2">
+                      {test.subcategory.name}
+                    </td>
+                    <td className="text-white border-2 border-gray-400 px-2 text-center py-2">
+                      <button
+                        onClick={() => editTest(test)}
+                        className="px-[8px] "
+                      >
+                        <CiEdit className="text-green-400 text-[22px] font-bold " />
+                      </button>
+                      <button
+                        onClick={() => {
+                          setDeleteModal(true);
+                          setDeleteId(test.id);
+                        }}
+                        className="px-[8px]"
+                      >
+                        <MdDeleteOutline className="text-red-500 text-[22px] font-bold" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
           {open && (
             <div
               onClick={() => setOpen(false)}
@@ -365,6 +414,35 @@ function BoshlangichTestPage() {
                     {isEdit ? "Tahrirlash" : "Yangi test qo'shish"}
                   </button>
                 </form>
+              </div>
+            </div>
+          )}
+          {deleteModal && (
+            <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="bg-white w-[90%] max-w-[400px] p-6 rounded-2xl shadow-xl"
+              >
+                <h2 className="text-xl font-bold text-center mb-4">
+                  Ushbu testni o‘chirishni tasdiqlaysizmi?
+                </h2>
+                <div className="flex justify-center gap-4">
+                  <button
+                    onClick={() => setDeleteModal(false)}
+                    className="px-4 py-2 bg-gray-300 rounded-md"
+                  >
+                    Yo‘q
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDeleteModal(false);
+                      deleteTest(deleteId);
+                    }}
+                    className="px-4 py-2 bg-red-500 text-white rounded-md"
+                  >
+                    Ha
+                  </button>
+                </div>
               </div>
             </div>
           )}
