@@ -17,25 +17,25 @@ const Header = () => {
   const [openSitebar, setOpenSitebar] = useState(false)
   const dispatch = useDispatch()
   const store = useSelector((state) => state.darkMode.dark)
-  // const [changeSun, setChangeSun] = useState(false) 
+
   return (
-    <section className={`${store ? "bg-[#212130] border border-[#212130]" : "bg-[white] border border-gray-700"}`}>
-        <div className='container mx-auto py-4 px-4 pl-[254px] max-w-[100%] '>
+    <section className={`${store ? "bg-[#212130] border border-[#212130]" : "bg-[white] border border-gray-700"} fixed top-0 left-0 right-0 `}>
+        <div className='container mx-auto py-4 px-4 pl-[254px] max-w-[100%]'>
           <div className='flex justify-between items-center'>
             <span onClick={() => setOpenSitebar(!openSitebar)}><CgMenuLeft className={`${store ? "text-4xl text-white cursor-pointer" : "text-gray-700 text-4xl cursor-pointer"}`} /></span>
             <span onClick={() => dispatch(changeTheme())}>{store}{store ? <FaSun className='text-white text-3xl cursor-pointer'/> : <FaMoon className='text-gray-700 text-3xl cursor-pointer'/> }</span>
             {openSitebar && (
-              <div className='fixed top-0 left-0 z-100'>
-                <main className='w-[80px] text-center min-h-screen bg-gray-800'>
+              <div className='fixed top-0 left-0 right-0 z-100'>
+                <main className={`w-[80px] text-center min-h-screen ${store ? 'bg-gray-800' : 'bg-white'} `}>
                 <NavLink to={'/'} className='flex items-center text-3xl text-white font-[600] h-17 bg-[#6a73fa]'><p className='text-5xl'>🎓</p>PsyEdu</NavLink>
-                <div className='flex flex-col py-[22px] text-white text-center text-xl gap-3'>
-                  <NavLink to={'/statictics'}><IoStatsChart className='h-10 py-2 w-full hover:text-gray-800 hover:bg-white'/></NavLink>
-                  <NavLink to={'/'} className='h-12 py-2 w-full hover:text-gray-800 hover:bg-white'>📊</NavLink>
-                  <NavLink to={'/'}><TbCategory2 className='h-10 py-2 w-full hover:text-gray-800 hover:bg-white'/></NavLink>
-                  <NavLink to={'/'} className='h-12 py-2 w-full hover:text-gray-800 hover:bg-white'>🧪</NavLink>
-                  <NavLink to={'/'} className='h-12 py-2 w-full hover:text-gray-800 hover:bg-white'>📚</NavLink>
-                  <NavLink to={'/'}><FaAd className='h-10 py-2 w-full hover:text-gray-800 hover:bg-white'/></NavLink>
-                  <NavLink to={'/'}><MdOutlineAddLocationAlt className='h-10 py-2 w-full hover:text-gray-800 hover:bg-white'/></NavLink>
+                <div className={`flex flex-col py-[22px] text-center text-xl gap-3 ${store ? 'text-white' : 'text-gray-800'}`}>
+                  <NavLink to={'/statictics'}><IoStatsChart className={`h-10 py-2 w-full ${store ? 'hover:bg-white hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}/></NavLink>
+                  <NavLink to={'/'} className={`h-12 py-2 w-full ${store ? 'hover:bg-white hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}>📊</NavLink>
+                  <NavLink to={'/'}><TbCategory2 className={`h-10 py-2 w-full ${store ? 'hover:bg-white hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}/></NavLink>
+                  <NavLink to={'/'} className={`h-12 py-2 w-full ${store ? 'hover:bg-white hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}>🧪</NavLink>
+                  <NavLink to={'/'} className={`h-12 py-2 w-full ${store ? 'hover:bg-white hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}>📚</NavLink>
+                  <NavLink to={'/'}><FaAd className={`h-10 py-2 w-full ${store ? 'hover:bg-white hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}/></NavLink>
+                  <NavLink to={'/'}><MdOutlineAddLocationAlt className={`h-10 py-2 w-full ${store ? 'hover:bg-white hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}/></NavLink>
                   <span onClick={logOut} className='flex items-center gap-2 border py-3 px-4 rounded-md text-gray-700 bg-white font-[600] hover:opacity-90 cursor-pointer active:scale-95 duration-620'>
                     <MdExitToApp className='text-2xl'/>
                   </span>
@@ -49,4 +49,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default Header 
