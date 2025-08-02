@@ -15,7 +15,7 @@ const LoginPage = () => {
                 password: data.password,
             });
             localStorage.setItem("token", res?.data?.access_token)
-            navigate('/')            
+            navigate('/statictics')            
         }catch(err){
             console.error(err)
         }

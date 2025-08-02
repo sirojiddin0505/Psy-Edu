@@ -15,6 +15,7 @@ import Adpage from './pages/ad/Index';
 import BoshlangichTestPage from './pages/testlar/boshlangich'
 import DoimiyTestPage from './pages/testlar/doimiy'
 import YakuniyTestPage from './pages/testlar/yakuniy'
+import CategoryPage from './pages/category'
  
 
 const App = () => {
@@ -23,11 +24,12 @@ const App = () => {
      <Routes>
       <Route path='/login' element={<LoginPage />} />
       <Route path='/' element={<Adminlayout/>}>
-        <Route path='/statictics' element={<Statistics/>} />
+        <Route path='/statistics' element={<Statistics/>} />
         <Route path='/results/start' element={<StarterTestPage />} />
         <Route path='/results/lesson' element={<LessonTestPage />} />
         <Route path='/results/result-finish' element={<CategoryTestPage />} />
         <Route path='/results/category' element={<EndTestPage />} />
+        <Route path='/categories' element={<CategoryPage />} />
         <Route path='/lessons/2' element={<AddLesson />} />
         <Route path='/lessons/1' element={<AddModule />} />
         <Route path='/lessons/3' element={<AddTestForLesson />} />
