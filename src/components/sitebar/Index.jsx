@@ -6,7 +6,7 @@ import { TbCategory2 } from 'react-icons/tb'
 import { useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-const Sitebar = () => {
+const Sitebar = ({collapsed}) => {
   const navigate = useNavigate()
   const [activeMenu, setActiveMenu] = useState(null)
 
@@ -22,13 +22,22 @@ const Sitebar = () => {
 
   return (
     <aside className='fixed top-0 left-0 z-10'>
-      <main className={`w-[250px] min-h-screen  ${isDark ? 'bg-gray-800' : "bg-white"}`}>
-        <NavLink to='/' className='flex items-center text-3xl text-white font-[600] h-17 bg-[#6a73fa]'><p className='text-5xl'>🎓</p>PsyEdu</NavLink>
+      <main className={`${collapsed ? 'w-[80px]' : 'w-[250px]'} min-h-screen transition-all duration-300 ${isDark ? 'bg-gray-800' : "bg-white"}`}>
+        <NavLink to='/statistics'
+          className='flex items-center text-3xl text-white font-[600] h-17 bg-[#6a73fa]'>
+          <p className='text-5xl'>🎓</p> {!collapsed && <span>Psy Edu</span>}
+        </NavLink>
+
         <div className={`flex flex-col py-4 text-xl gap-1 ${isDark ? 'text-white' : "text-gray-800"} `}>
-          <NavLink to='/statictics' className={`flex items-center gap-3 py-3 px-4 ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'} `}><IoStatsChart /> Statictics</NavLink>
+          <NavLink to='/statistics' 
+            className={`flex items-center gap-3 py-3 px-4 text-center ${isDark ? 'hover:bg-white hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'} `}>
+            <IoStatsChart /> {!collapsed && <span>Statictics</span>}
+          </NavLink>
+
           <div>
-            <div onClick={() => toggleMenu('natijalar')} className={`flex items-center justify-between py-3 px-4 cursor-pointer ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'} `}>
-              <span className='flex gap-2 items-center'>📊 Natijalar</span>
+            <div onClick={() => toggleMenu('natijalar')}
+              className={` flex items-center justify-between py-3 px-4 cursor-pointer ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'} `}>
+              <span className='flex gap-2 items-center'>📊 {!collapsed && <span>Natijalar</span>} </span>
               <MdOutlineKeyboardArrowRight className={`transform transition duration-300 ${activeMenu === 'natijalar' ? 'rotate-90' : ''}`} />
             </div>
             {activeMenu === 'natijalar' && (
@@ -40,10 +49,16 @@ const Sitebar = () => {
               </div>
             )}
           </div>
-          <NavLink to='/categories' className={`flex items-center gap-3 py-3 px-4 ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'} `}><TbCategory2 /> Kategoriyalar</NavLink>
+
+          <NavLink to='/categories' 
+            className={`flex items-center gap-3 py-3 px-4 ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'} `}>
+            <TbCategory2 /> {!collapsed && <span>Kategoriyalar</span>}
+          </NavLink>
+
           <div>
-            <div onClick={() => toggleMenu('testlar')} className={`flex items-center justify-between py-3 px-4 cursor-pointer ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}>
-              <span className='flex gap-2 items-center'>🧪 Testlar</span>
+            <div onClick={() => toggleMenu('testlar')}
+              className={`flex items-center justify-between py-3 px-4 cursor-pointer ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}>
+              <span className='flex gap-2 items-center'>🧪 {!collapsed && <span>Testlar</span>}</span>
               <MdOutlineKeyboardArrowRight className={`transform transition duration-300 ${activeMenu === 'testlar' ? 'rotate-90' : ''}`} />
             </div>
             {activeMenu === 'testlar' && (
@@ -54,9 +69,10 @@ const Sitebar = () => {
               </div>
             )}
           </div>
+
           <div>
             <div onClick={() => toggleMenu('darslar')} className={`flex items-center justify-between py-3 px-4 cursor-pointer ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'} `}>
-              <span className='flex gap-2 items-center'>📚 Darslar</span>
+              <span className='flex gap-2 items-center'>📚 {!collapsed && <span>Darslar</span>}</span>
               <MdOutlineKeyboardArrowRight className={`transform transition duration-300 ${activeMenu === 'darslar' ? 'rotate-90' : ''}`} />
             </div>
             {activeMenu === 'darslar' && (
@@ -67,10 +83,19 @@ const Sitebar = () => {
               </div>
             )}
           </div>
-          <NavLink to='/ads' className={`flex items-center gap-3 py-3 px-4 ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}><FaAd /> Reklamalar</NavLink>
-          <NavLink to='/regions' className={`flex items-center gap-3 py-3 px-4 ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}><MdOutlineAddLocationAlt /> Viloyatlar</NavLink>
+
+          <NavLink to='/ads'
+            className={`flex items-center gap-3 py-3 px-4 ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}>
+            <FaAd /> {!collapsed && <span>Reklamalar</span>}
+          </NavLink>
+
+          <NavLink to='/regions'
+            className={`flex items-center gap-3 py-3 px-4 ${isDark ? 'hover:bg-white  hover:text-gray-800' : 'hover:bg-gray-500 hover:text-white'}`}>
+            <MdOutlineAddLocationAlt /> {!collapsed && <span>Viloyatlar</span>}
+          </NavLink>
+      
           <span onClick={logOut} className={`flex items-center gap-2 border py-3 px-4 mx-1 rounded-md text-gray-700 bg-white font-[600] hover:bg-[#dad9d9] cursor-pointer active:scale-95 duration-620`}>
-            <MdExitToApp className='text-2xl' /> Chiqish
+            <MdExitToApp className='text-2xl' /> {!collapsed && <span>Chiqish</span>}
           </span>
         </div>
       </main>
