@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { FaYoutube, FaFilePdf, FaFilePowerpoint, FaEdit, FaTrash } from 'react-icons/fa';
 import axios from 'axios';
-import { FaFilePdf, FaFilePowerpoint, FaEdit, FaTrash, FaYoutube } from 'react-icons/fa';
 
-export default function AddLesson() {
+const AddLesson = () => {
   const [lessons, setLessons] = useState([]);
+  const [modules, setModules] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [formData, setFormData] = useState({
-    videoUrl: '',
-    moduleName: '',
-    lessonName: '',
     order: '',
+    title: '',
+    courseModulId: '',
+    videoUrl: '',
     pdfFile: null,
-    pptFile: null,
+    pptxFile: null,
   });
 
   const getLessons = async () => {
@@ -20,26 +22,35 @@ export default function AddLesson() {
       const res = await axios.get('https://testpsyedu.limsa.uz/lessons');
       setLessons(res.data?.data?.data || []);
     } catch (err) {
-      console.error('Xatolik:', err);
+      console.error('Darslarni olishda xatolik:', err);
+    }
+  };
+
+  const getModules = async () => {
+    try {
+      const res = await axios.get('https://testpsyedu.limsa.uz/course-module');
+      setModules(res.data?.data|| []);
+    } catch (err) {
+      console.error('Modullarni olishda xatolik:', err);
     }
   };
 
   useEffect(() => {
     getLessons();
+    getModules();
   }, []);
 
-  const getMaterial = (materials, type) =>
-    materials?.find((m) => m.materialType === type);
-
   const getYouTubeThumbnail = (url) => {
-    const match = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
-    return match ? `https://img.youtube.com/vi/${match[1]}/0.jpg` : null;
+    try {
+      const videoId = new URL(url).searchParams.get('v');
+      return `https://img.youtube.com/vi/${videoId}/0.jpg`;
+    } catch {
+      return null;
+    }
   };
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setFormData({ videoUrl: '', moduleName: '', lessonName: '', order: '', pdfFile: null, pptFile: null });
+  const getMaterial = (materials, type) => {
+    return materials?.find((m) => m.fileType === type);
   };
 
   const handleInputChange = (e) => {
@@ -50,6 +61,19 @@ export default function AddLesson() {
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     setFormData((prev) => ({ ...prev, [name]: files[0] }));
+  };
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setFormData({
+      order: '',
+      title: '',
+      courseModulId: '',
+      videoUrl: '',
+      pdfFile: null,
+      pptxFile: null,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -86,7 +110,7 @@ export default function AddLesson() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {lessons.map((lesson, i) => {
+        {lessons.map((lesson) => {
           const pdf = getMaterial(lesson.lessonMaterials, 'pdf');
           const ppt = getMaterial(lesson.lessonMaterials, 'pptx');
           const thumbnail = getYouTubeThumbnail(lesson.videoUrl);
@@ -166,28 +190,20 @@ export default function AddLesson() {
         })}
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-center items-center gap-4 mt-10">
-        <button
-          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-          className="text-gray-600 hover:text-black"
-        >
+        <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} className="text-gray-600 hover:text-black">
           &lt;
         </button>
         <span className="text-gray-700 font-medium">Sahifa {currentPage} / 1</span>
-        <button
-          onClick={() => setCurrentPage((p) => p + 1)}
-          className="text-gray-600 hover:text-black"
-        >
+        <button onClick={() => setCurrentPage((p) => p + 1)} className="text-gray-600 hover:text-black">
           &gt;
         </button>
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <h2 className="text-xl font-semibold mb-4">Video yaratish</h2>
+            <h2 className="text-xl font-semibold mb-4">Dars yaratish</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 type="text"
@@ -197,24 +213,30 @@ export default function AddLesson() {
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border rounded-md"
               />
+
               <select
-                name="moduleName"
-                value={formData.moduleName}
+                name="courseModulId"
+                value={formData.courseModulId}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border rounded-md"
               >
                 <option value="">Modul tanlang</option>
-                <option value="psixologiyaa">Psixologiyaa</option>
-                <option value="redux">Redux</option>
+                {modules.map((modul) => (
+                  <option key={modul.id} value={modul.id}>
+                    {modul.title}
+                  </option>
+                ))}
               </select>
+
               <input
                 type="text"
-                name="lessonName"
+                name="title"
                 placeholder="Dars nomi"
-                value={formData.lessonName}
+                value={formData.title}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border rounded-md"
               />
+
               <input
                 type="number"
                 name="order"
@@ -223,6 +245,7 @@ export default function AddLesson() {
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border rounded-md"
               />
+
               <input
                 type="file"
                 name="pdfFile"
@@ -231,17 +254,18 @@ export default function AddLesson() {
               />
               <input
                 type="file"
-                name="pptFile"
+                name="pptxFile"
                 onChange={handleFileChange}
                 className="w-full px-3 py-2 border rounded-md"
               />
+
               <div className="flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={closeModal}
                   className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded-md"
                 >
-                  Cancel
+                  Bekor qilish
                 </button>
                 <button
                   type="submit"
@@ -256,4 +280,6 @@ export default function AddLesson() {
       )}
     </div>
   );
-}
+};
+
+export default AddLesson;

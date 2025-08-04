@@ -31,7 +31,7 @@ export default function AddModule() {
   };
 
   const handleAddOrEditModule = async () => {
-    if (!title.trim() || !order.trim()) {
+    if (!title  || !order ) {
       toast.error("Iltimos, barcha maydonlarni to'ldiring.");
       return;
     }
@@ -39,14 +39,14 @@ export default function AddModule() {
     try {
       if (isEditing) {
         await axios.patch(`https://testpsyedu.limsa.uz/course-module/${editId}`, {
-          title: title.trim(),
-          order: Number(order),
+          title: title,
+          order: order,
         });
         toast.success("Modul muvaffaqiyatli yangilandi.");
       } else {
         await axios.post("https://testpsyedu.limsa.uz/course-module", {
-          title: title.trim(),
-          order: Number(order),
+          title: title,
+          order: order,
         });
         toast.success("Yangi modul qo‘shildi.");
       }
@@ -79,6 +79,8 @@ export default function AddModule() {
   const handleDeleteModule = async () => {
     setLoadingDelete(true);
     try {
+            console.log("Deleting module with ID:", deleteId);
+
       await axios.delete(`https://testpsyedu.limsa.uz/course-module/${deleteId}`);
       toast.success("Modul o‘chirildi.");
       getModules();
