@@ -2,7 +2,7 @@ import React from 'react'
 
 function LessonTestPage() {
   return (
-    <div>
+    <div className='bg-red-800 m-50'>
        LessonTestPage
     </div>
   )
