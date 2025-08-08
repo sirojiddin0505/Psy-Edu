@@ -4,6 +4,7 @@ import { AiTwotoneFileAdd } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 import { FaSquareCheck } from "react-icons/fa6";
 import { MdDeleteOutline } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 
 function BoshlangichTestPage() {
@@ -24,6 +25,7 @@ function BoshlangichTestPage() {
   const token = localStorage.getItem("token");
   const [deleteId, setDeleteId] = useState(null);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
   const resetForm = () => {
     setQuiz("");
     setVariant1("");
@@ -85,7 +87,13 @@ function BoshlangichTestPage() {
       setOpen(false);
       getTest();
     } catch (err) {
-      toast.error("Savol qo'shishni imkoni bo'lmadi");
+      console.log(err);
+      
+      {
+        isEdit
+          ? toast.error("Savol o'zgartirishni imkoni bo'lmadi")
+          : toast.error("Savol qo'shishni imkoni bo'lmadi");
+      }
     }
   };
   const editTest = async (test) => {
@@ -134,6 +142,8 @@ function BoshlangichTestPage() {
       setTests(res?.data?.data?.questions);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
   const deleteTest = async (deleteId) => {
@@ -150,10 +160,12 @@ function BoshlangichTestPage() {
       setOpen(false);
       getTest();
     } catch (error) {
+      console.log(error);
       toast.error("Testni o'chirishni imkoni bo'lmadi.");
     }
   };
   useEffect(() => {
+    setLoading(true)
     getTest();
     getTopics();
     getTestCategory();
@@ -161,6 +173,10 @@ function BoshlangichTestPage() {
   const filteredTests = tests.filter((test) =>
     test.text.toLowerCase().includes(search.toLowerCase())
   );
+
+  const isDark = useSelector((state) => state.darkMode.dark);
+  // const dispatch = useDispatch();
+
   return (
     <div className=" ">
       <ToastContainer />
@@ -169,7 +185,11 @@ function BoshlangichTestPage() {
           Boshlang'ich testlar
         </h2>
         <div className="px-[15px]  ">
-          <form className="flex justify-between items-center rounded-[10px] bg-gray-800 py-[20px] px-[20px] ">
+          <form
+            className={`flex justify-between items-center rounded-[10px] ${
+              isDark ? " bg-gray-800 " : "bg-white"
+            }  py-[20px] px-[20px] `}
+          >
             <input
               value={search}
               onChange={(e) => setSearch(e?.target?.value)}
@@ -190,14 +210,18 @@ function BoshlangichTestPage() {
           </form>
         </div>
         <div className="overflow-x-auto px-[15px] rounded-[10px] overflow-hidden py-[15px] ">
-          {filteredTests.length === 0 ? (
+          {loading ? (
+            <div className="flex justify-center py-10">
+              <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : filteredTests.length === 0 ? (
             <div className="py-[20px] ">
-                <div className="flex justify-center flex-col items-center ">
-                  <AiTwotoneFileAdd className="text-white text-[70px]  " />
-                  <span className="text-[20px] text-white font-bold ">
-                    Sizda hali bunday test mavjud emas 😥
-                  </span>
-                </div>
+              <div className="flex justify-center flex-col items-center ">
+                <AiTwotoneFileAdd className="text-white text-[70px]  " />
+                <span className="text-[20px] text-white font-bold ">
+                  Sizda hali bunday test mavjud emas 😥
+                </span>
+              </div>
             </div>
           ) : (
             <table className="min-w-full border border-gray-300 text-sm text-left">
