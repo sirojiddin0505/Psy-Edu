@@ -2,7 +2,7 @@ import React from 'react'
 
 function StarterTestPage() {
   return (
-    <div>
+    <div className='bg-amber-700 ml-30'>
       StarterTestPage
     </div>
   )
